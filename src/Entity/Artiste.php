@@ -50,11 +50,6 @@ class Artiste
     private $nomSpectacleSoiree;
 
     /**
-     * @ORM\Column(type="json")
-     */
-    private $date = [];
-
-    /**
      * @ORM\Column(type="array")
      */
     private $lang_code = [];
@@ -99,10 +94,22 @@ class Artiste
      */
     private $edition;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Live::class, mappedBy="artist")
+     */
+    private $lives;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Live::class, inversedBy="artistes")
+     */
+    private $dates;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->lives = new ArrayCollection();
+        $this->dates = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -178,18 +185,6 @@ class Artiste
     public function setNomSpectacleSoiree(?string $nomSpectacleSoiree): self
     {
         $this->nomSpectacleSoiree = $nomSpectacleSoiree;
-
-        return $this;
-    }
-
-    public function getDate(): ?array
-    {
-        return $this->date;
-    }
-
-    public function setDate(array $date): self
-    {
-        $this->date = $date;
 
         return $this;
     }
@@ -328,6 +323,60 @@ class Artiste
     public function setEdition(?Event $edition): self
     {
         $this->edition = $edition;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Live[]
+     */
+    public function getLives(): Collection
+    {
+        return $this->lives;
+    }
+
+    public function addLife(Live $life): self
+    {
+        if (!$this->lives->contains($life)) {
+            $this->lives[] = $life;
+            $life->setArtist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLife(Live $life): self
+    {
+        if ($this->lives->removeElement($life)) {
+            // set the owning side to null (unless already changed)
+            if ($life->getArtist() === $this) {
+                $life->setArtist(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Live[]
+     */
+    public function getDates(): Collection
+    {
+        return $this->dates;
+    }
+
+    public function addDate(Live $date): self
+    {
+        if (!$this->dates->contains($date)) {
+            $this->dates[] = $date;
+        }
+
+        return $this;
+    }
+
+    public function removeDate(Live $date): self
+    {
+        $this->dates->removeElement($date);
 
         return $this;
     }

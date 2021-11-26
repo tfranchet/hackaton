@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Artiste;
+use App\Form\ArtisteType;
 use App\Repository\ArtisteRepository;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,26 +20,60 @@ class ArtisteController extends AbstractController
     /**
      * @Route("/", name="all_artistes")
      */
-    public function index(Request $request, ArtisteRepository $artisteRepository): Response
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $artistes = $artisteRepository->findAll();
-        return $this->render('templates/artistes/all.html.twig', [
+        $repo = $entityManager->getRepository(Artiste::class);
+        $artistes = $repo->findAll();
+        return $this->render('artistes/all.html.twig', [
             'artistes' => $artistes,
         ]);
     }
 
     /**
-     * @Route("/id", name="artiste_id")
+     * @Route("/new", name="artiste_new")
      */
-    public function artiste_id(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
-        $method = $request->getMethod();
-        switch ($method){
-            case 'GET' : $this->redirectToRoute();
+        $artiste = new Artiste();
+        $form = $this->createForm(ArtisteType::class, $artiste);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $em->persist($artiste);
+            $em->flush();
+            return $this->redirectToRoute('all_artistes');
         }
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ArtisteController.php',
+        return $this->render('artistes/new.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/edit/{id}", name="artiste_edit")
+     */
+    public function edit(string $id, Request $request , EntityManagerInterface $em): Response
+    {
+        $artiste = $em->getRepository(Artiste::class)->find($id);
+        $form = $this->createForm(ArtisteType::class, $artiste);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $em->persist($artiste);
+            $em->flush();
+            return $this->redirectToRoute('all_artistes');
+        }
+        return $this->render('artistes/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="artiste_show")
+     */
+    public function show(string $id, EntityManagerInterface $em): Response
+    {
+        $artiste = $em->getRepository(Artiste::class)->find($id);
+        return $this->render('artistes/one.html.twig', [
+            'artiste' => $artiste,
+        ]);
+    }
+
+
 }

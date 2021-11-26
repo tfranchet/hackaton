@@ -9,9 +9,7 @@ doctrine:
         charset: UTF8
         # Options for SSL connection
         options:
-            MYSQL_ATTR_SSL_CA: %ca_cert%
-            MYSQL_ATTR_SSL_KEY: %private_key%
-            MYSQL_ATTR_SSL_CERT: %public_cert%
+            !php/const:PDO::MYSQL_ATTR_SSL_CA: '%kernel.project_dir%/BaltimoreCyberTrustRoot.crt.pem'
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
