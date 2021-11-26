@@ -1,33 +1,32 @@
+{% include 'base.html.twig' %}
 {% block body %}
     <table>
         <thead>
-            <tr>Artiste</tr>
-            <tr>Origine</tr>
-            <tr>Spotify</tr>
-            <tr>Deezer</tr>
-            <tr>Annee</tr>
-            <tr>Edition</tr>
-            <tr>Nom spectable ou soirée</tr>
-            <tr>Dates</tr>
-            <tr>Langue</tr>
-            <tr>Receive quest</tr>
-            <tr>Ilomember</tr>
-            <tr>Label_sp</tr>
-            <tr>Label_en</tr>
-            <tr>ONU_code</tr>
+        <tr>
+            <td>Artiste</td>
+            <td>Origine</td>
+            <td>Spotify</td>
+            <td>Deezer</td>
+            <td>Annee</td>
+            <td>Edition</td>
+            <td>Dates</td>
+            <td>Langue</td>
+            <td>Receive quest</td>
+            <td>Ilomember</td>
+            <td>Label_sp</td>
+            <td>Label_en</td>
+            <td>ONU_code</td>
+        </tr>
         </thead>
         <tbody>
         {% for artiste in artistes %}
         <tr>
             <td>{{ artiste.nom }}</td>
-            <td>{{ artiste.origine }}</td>
+            <td>{{ artiste.origine.0 }}</td>
             <td>{{ artiste.spotify }}</td>
             <td>{{ artiste.deezer }}</td>
             <td>{{ artiste.annee }}</td>
             <td>{{ artiste.edition }}</td>
-            <td>{{ artiste.nomSpectacle }}</td>
-            <td>{{ artiste.dates }}</td>
-            <td>{{ artiste.lang_code.0 }} : {{ artiste.lang_code.1 }} : {{ artiste.lang_code.2 }}</td>
             <td>{{ artiste.isReceivingQuest }}</td>
             <td>{{ artiste.isIlomember }}</td>
             <td>{{ artiste.labelSp }}</td>
