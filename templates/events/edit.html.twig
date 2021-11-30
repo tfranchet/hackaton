@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ajout d'un event{% endblock %}
+{% block body %}
+    {% if app.session.get('role') is not null %}
+    {% include 'headnav.html.twig' %}
+    {{ form(form) }}
+    {% endif %}
+{% endblock %}
