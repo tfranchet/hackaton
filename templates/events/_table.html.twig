@@ -1,0 +1,22 @@
+    <table>
+        <thead>
+        <tr>
+            <td><a href="{{ path('artiste_new') }}"><button class="btn-new">Ajouter un artiste</button></a></td>
+            <td>Artiste</td>
+            <td>Ville</td>
+            <td>Spotify</td>
+            <td>Deezer</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for artiste in artistes %}
+        <tr>
+            <td><a href="{{ path('artiste_edit', {'id' : artiste.id}) }}"><button class="btn-green">Modifier</button></a></td>
+            <td>{{ artiste.nom }}</td>
+            <td>{{ artiste.ville.0 }}</td>
+            <td>{{ artiste.spotify }}</td>
+            <td>{{ artiste.deezer }}</td>
+             </tr>
+        {% endfor %}
+        </tbody>
+    </table>
