@@ -21,7 +21,7 @@ class ArtisteController extends AbstractController
      */
     public function index(Request $request, RestService $rest): Response
     {
-        $artistes = $rest->requestRestApi('artistes', 'GET');
+        $artistes = $rest->requestRestApi('artists', 'GET');
         return $this->render('artistes/all.html.twig', [
             'artistes' => $artistes,
         ]);
@@ -53,22 +53,16 @@ class ArtisteController extends AbstractController
      */
     public function edit($id, Request $request, EntityManagerInterface $em, RestService $rest): Response
     {
-        $artiste = $rest->requestRestApi('artistes/'. $id, 'GET');
+        $artiste = $rest->requestRestApi('artists/'. $id, 'GET');
         $form = $this->createFormBuilder()
-            ->add('nom', TextType::class)
-            ->add('spotify', TextType::class)
-            ->add('deezer', TextType::class)
-            ->add('ville', TextType::class)
+            ->add('name', TextType::class)
+            ->add('spotify_url', TextType::class)
+            ->add('deezer_url', TextType::class)
             ->add('sauvegarder', SubmitType::class)
             ->getForm();
-        $form->get('nom')->setData($artiste['name']);
-        $form->get('spotify')->setData($artiste['spotify_url']);
-        $form->get('deezer')->setData($artiste['deezer_url']);
-        $formatedCities = '';
-        foreach ($artiste['city'] as $city){
-            $formatedCities .= $city['name'] . ', ';
-        }
-        $form->get('ville')->setData($formatedCities);
+        $form->get('name')->setData($artiste['name']);
+        $form->get('spotify_url')->setData($artiste['spotify_url']);
+        $form->get('deezer_url')->setData($artiste['deezer_url']);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $rest->requestRestApi('artistes/'. $id, 'PUT', $form->getData());

@@ -1,22 +1,61 @@
 {% if app.session.get('role') is not null %}
-<table>
+    <script type="text/javascript" >
+        $(document).ready(function(){
+            $("#search_artist").on("keyup", filter);
+        });
+        function filter() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("search_artist");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("data_artist");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                var x = $("#search_artist").val();
+                var regex = /^[a-zA-Z]+$/;
+                if (!x.match(regex)) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                }
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+    </script>
+
+    <label>
+        Nom de l'artiste <input id="search_artist">
+    </label>
+    <table id="table_artist">
         <thead>
         <tr>
             <td><a href="{{ path('artiste_new') }}"><button class="btn-new">Ajouter un artiste</button></a></td>
             <td>Artiste</td>
-            <td>Ville</td>
             <td>Spotify</td>
             <td>Deezer</td>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="data_artist">
         {% for artiste in artistes %}
         <tr>
             <td><a href="{{ path('artiste_edit', {'id' : artiste.id}) }}"><button class="btn-green">Modifier</button></a></td>
-            <td>{{ artiste.nom }}</td>
-            <td>{{ artiste.ville.0 }}</td>
-            <td>{{ artiste.spotify }}</td>
-            <td>{{ artiste.deezer }}</td>
+            <td>{{ artiste.name }}</td>
+            <td>{% if artiste.spotify_url != '' %}
+                    <a target="_blank" href="{{ artiste.spotify_url}}">{{ artiste.spotify_url }}</a>
+                    {% else %}
+                    Pas de liens spotify
+                {% endif %}</td>
+            <td>
+                {% if artiste.deezer_url != '' %}
+                <a target="_blank" href="https://www.deezer.com/fr/album/{{ artiste.deezer_url}}">{{ artiste.deezer_url }}</a>
+                {% else %}
+                    Pas de liens deezer
+            {% endif %}</td>
              </tr>
         {% endfor %}
         </tbody>

@@ -5,10 +5,11 @@ namespace App\Service;
 class RestService
 {
     public function requestRestApi($endpoint, $method, $data = null){
-        $url = 'http://azurehackathon-rest-app.azurewebsites.net/api/' . $endpoint;
+        $url = 'https://hackathon-rest-app.azurewebsites.net/api/' . $endpoint;
         $ch = curl_init();
+
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, TRUE);
+        curl_setopt($ch, CURLOPT_NOBODY, FALSE);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         switch ($method){
             case 'GET' : break;
@@ -22,6 +23,7 @@ class RestService
         $head = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
+        $head = json_decode($head, true);
         if($httpCode < 400){
             return $head;
         }

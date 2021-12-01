@@ -53,7 +53,7 @@ class EventsController extends AbstractController
         ]);
     }
     /**
-     * @Route("/edit/{id}", name="artiste_edit")
+     * @Route("/edit/{id}", name="event_edit")
      */
     public function edit($id, Request $request, EntityManagerInterface $em, RestService $rest): Response
     {
