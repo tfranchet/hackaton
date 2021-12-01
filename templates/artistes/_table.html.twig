@@ -1,8 +1,5 @@
-{% extends 'base.html.twig' %}
-{% block title %}Tout les artistes{% endblock %}
-{% block body %}
-    {% include 'headnav.html.twig' %}
-    <table>
+{% if app.session.get('role') is not null %}
+<table>
         <thead>
         <tr>
             <td><a href="{{ path('artiste_new') }}"><button class="btn-new">Ajouter un artiste</button></a></td>
@@ -24,4 +21,4 @@
         {% endfor %}
         </tbody>
     </table>
-{% endblock %}
+{% endif %}

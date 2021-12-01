@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
-    {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
     {% block stylesheets %}
         <style>
             table {
@@ -21,6 +19,35 @@
                 text-align: center;
             }
             thead { color: #3adb76}
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            button{
+                background-color: #147dc2;
+                border: none;
+                color: white;
+                padding: 10px 16px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                cursor:pointer;
+                transition-duration: 0.4s;
+            }
+            button:hover {
+                box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 12px 12px 0 rgba(0,0,0,0.19);
+            }
+            .btn-new {
+                background-color: #1b9448;
+            }
+            .btn-edit {
+                background-color: #a46a1f;
+            }
+            .flexbody{
+                display: flex;
+                justify-content: center;
+            }
         </style>
     {% endblock %}
 
@@ -29,7 +56,7 @@
     {% endblock %}
 
 </head>
-<body>
+<body style="text-align: center">
 {% block body %}{% endblock %}
 </body>
 </html>

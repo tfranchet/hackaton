@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block title %}Tout les artistes{% endblock %}
+{% block body %}
+    {% include 'headnav.html.twig' %}
+    <div class="flexbody">
+        {% if app.session.get('role') is not null %}
+        {% include 'artistes/_table.html.twig' %}
+        {% include 'events/_table.html.twig' %}
+        {% endif %}
+    </div>
+    <div class="flexbody">
+        {% if app.session.get('role') is not null %}
+            {% include 'notification/_table.html.twig' %}
+        {% endif %}
+    </div>
+{% endblock %}

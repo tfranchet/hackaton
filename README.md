@@ -8,6 +8,7 @@ Le projet est sous symfony donc php/twig
 
 - Symfony : https://symfony.com/doc/current/setup.html
 - Composer : apt-get install composer
+- php 7.2.5 +
 
 ## Demarrage
 

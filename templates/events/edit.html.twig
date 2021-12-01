@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
-{% block title %}Ajout d'un event{% endblock %}
+{% block title %}Edition d'un event{% endblock %}
 {% block body %}
-    {% if app.session.get('role') is not null %}
     {% include 'headnav.html.twig' %}
+    {% if app.session.get('role') is not null %}
     {{ form(form) }}
+        <h3>Une notification sera envoyé</h3>
     {% endif %}
 {% endblock %}

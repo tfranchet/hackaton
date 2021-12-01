@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
-{% block title %}Tout les artistes{% endblock %}
+{% block title %}Tout les events{% endblock %}
 {% block body %}
     {% include 'headnav.html.twig' %}
-    {% include 'artistes/_table.html.twig' %}
+    {% if app.session.get('role') is not null %}
+    {% include 'events/_table.html.twig' %}
+    {% endif %}
 {% endblock %}
