@@ -6,7 +6,6 @@ class RestService
 {
     public function requestRestApi($endpoint, $method, $data = null){
         $url = 'https://hackathon-rest-app.azurewebsites.net/api/' . $endpoint;
-
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_NOBODY, FALSE);

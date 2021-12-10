@@ -88,12 +88,12 @@ class EventsController extends AbstractController
             ->add('artist_id', ChoiceType::class, ['choices' => $tabartists])
             ->add('concert_hall_id', ChoiceType::class, ['choices' => $tabsalles])
             ->add('date', TextType::class)
-            ->add('creer', SubmitType::class)
+            ->add('editer', SubmitType::class)
             ->getForm();
-        $form->handleRequest($request);
-        $form->get('artistes')->setData($event['artist_id']);
-        $form->get('salle')->setData($event['concert_hall_id']);
+        $form->get('artist_id')->setData($event['artist_id']+1);
+        $form->get('concert_hall_id')->setData($event['concert_hall_id']+1);
         $form->get('date')->setData($event['date']);
+
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $querytab = [];
@@ -101,8 +101,7 @@ class EventsController extends AbstractController
             $querytab['concert_hall_id'] = $form->get('concert_hall_id')->getData();
             $querytab['date'] = date('c',strtotime($form->get('date')->getData()));
             $querytab['timestamp'] = date('c',strtotime($form->get('date')->getData()));
-            $querytab['edition_id'] = $event['edition_id'];
-            $rest->requestRestApi('events/'. $id, 'PUT', $querytab);
+            $rest->requestRestApi('events/'. $id, 'PUT', json_encode($querytab));
             return $this->redirectToRoute('all_events');
         }
         return $this->render('events/new.html.twig', [

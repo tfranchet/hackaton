@@ -85,7 +85,7 @@ class ArtisteController extends AbstractController
         $form->get('countries')->setData($artiste['countries'][0]['id']);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $rest->requestRestApi('artistes/'. $id, 'PUT', $form->getData());
+            $rest->requestRestApi('artistes/'. $id, 'PUT', json_encode($form->getData()));
             return $this->redirectToRoute('all_artistes');
         }
         return $this->render('artistes/new.html.twig', [
