@@ -119,11 +119,11 @@ class EventsController extends AbstractController
         $artistes = $rest->requestRestApi('artists', 'GET');
         $salles = $rest->requestRestApi('concerthalls', 'GET');
         if($id == null){
-            $edition = $editions[count($editions)-1];
+            $edition = $editions[count($editions) - 1];
         } else {
-            $edition = $editions[$id];
+            $edition = $editions[$id-1];
         }
-        $events = $rest->requestRestApi('editions/'. $edition['id'] . '/events', 'GET');
+        $events = $rest->requestRestApi('editions/'. ($edition['id']). '/events', 'GET');
 
         foreach ($events as $key => $event){
             $events[$key]['artist_id'] = $artistes[$event['artist_id']]['name'];
