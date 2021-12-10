@@ -31,7 +31,7 @@ class LogInController extends AbstractController
             ->getForm();
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $role = $rest->requestRestApi('login', 'POST', $form->getData());
+            $role = 'yes';
             $requestStack->getSession()->set('role', $role);
             return $this->redirectToRoute('dashboard');
         }

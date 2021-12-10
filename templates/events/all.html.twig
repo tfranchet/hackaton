@@ -3,6 +3,7 @@
 {% block body %}
     {% include 'headnav.html.twig' %}
     {% if app.session.get('role') is not null %}
+        {{ form(form) }}
     {% include 'events/_table.html.twig' %}
     {% endif %}
 {% endblock %}

@@ -19,8 +19,15 @@ class DashboardController extends AbstractController
      */
     public function index(RequestStack $request, RestService $rest): Response
     {
-        $artistes = $rest->requestRestApi('artistes', 'GET');
-        $events = $rest->requestRestApi('events', 'GET');
+        $editions = $rest->requestRestApi('editions', 'GET');
+        $edition = $editions[count($editions)-1];
+        $artistes = $rest->requestRestApi('artists', 'GET');
+        $events = $rest->requestRestApi('editions/' . $edition['id'] . '/events', 'GET');
+        $salles = $rest->requestRestApi('concerthalls', 'GET');
+        foreach ($events as $key => $event){
+            $events[$key]['artist_id'] = $artistes[$event['artist_id']]['name'];
+            $events[$key]['concert_hall_id'] = $salles[$event['concert_hall_id']]['name'];
+        }
         $notifs = $rest->requestRestApi('notifications', 'GET');
         $role = $request->getSession()->get('role');
         return $this->render('dashboard/index.html.twig', [

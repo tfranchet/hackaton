@@ -1,9 +1,9 @@
 {% if app.session.get('role') is not null %}
     <script type="text/javascript" >
         $(document).ready(function(){
-            $("#search_artist").on("keyup", filter);
+            $("#search_artist").on("keyup", filtera);
         });
-        function filter() {
+        function filtera() {
             var input, filter, table, tr, td, i;
             input = document.getElementById("search_artist");
             filter = input.value.toUpperCase();
@@ -28,13 +28,14 @@
 
     </script>
 
-    <label>
-        Nom de l'artiste <input id="search_artist">
-    </label>
-    <table id="table_artist">
+
+    <table>
         <thead>
         <tr>
-            <td><a href="{{ path('artiste_new') }}"><button class="btn-new">Ajouter un artiste</button></a></td>
+            <td><label>
+                    Rechercher un artiste <input id="search_artist">
+                </label><br><br>
+                <a href="{{ path('artiste_new') }}"><button class="btn-new">Ajouter un artiste</button></a></td>
             <td>Artiste</td>
             <td>Spotify</td>
             <td>Deezer</td>

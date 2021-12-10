@@ -1,24 +1,53 @@
 {% if app.session.get('role') is not null %}
-<table>
+    <script type="text/javascript" >
+        $(document).ready(function(){
+            $("#search_event").on("keyup", filtere);
+        });
+        function filtere() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("search_event");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("data_event");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                var x = $("#search_event").val();
+                var regex = /^[a-zA-Z]+$/;
+                if (!x.match(regex)) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                }
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+    </script>
+
+    <table>
         <thead>
         <tr>
-            <td><a href="{{ path('event_new') }}"><button class="btn-new">Ajouter un evennement</button></a></td>
-            <td>Evennement</td>
+            <td>
+            <label>
+                    Rechercher un evennement <input id="search_event">
+                </label><br><br>
+                <a href="{{ path('event_new') }}"><button class="btn-new">Ajouter un evennement</button></a></td>
             <td>Artiste</td>
             <td>Salle</td>
-            <td>Edition</td>
             <td>Date</td>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="data_event">
         {% for event in events %}
         <tr>
-            <td><a href="{{ path('artiste_edit', {'id' : event.id}) }}"><button class="btn-green">Modifier</button></a></td>
-            <td>{{ event.nom }}</td>
-            <td>{{ event.ville.0 }}</td>
-            <td>{{ event.spotify }}</td>
-            <td>{{ event.deezer }}</td>
-            <td>{{ event.deezer }}</td>
+            <td><a href="{{ path('event_edit', {'id' : event.id}) }}"><button class="btn-green">Modifier</button></a></td>
+            <td>{{ event.artist_id }}</td>
+            <td>{{ event.concert_hall_id }}</td>
+            <td>{{ event.date|date('d/m/Y') }}</td>
              </tr>
         {% endfor %}
         </tbody>
