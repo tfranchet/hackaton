@@ -1,23 +1,25 @@
 doctrine:
-    dbal:
-        driver: pdo_mysql
-        host: "hackathon-team-i.mysql.database.azure.com"
-        port: "3306"
-        dbname: "transmusicales_db"
-        user: "dev_hackathon@hackathon-team-i"
-        password: "eoAD9R1ZKyk8gifSNw5ZUniFDt64DgwJ"
-        charset: UTF8
-        # Options for SSL connection
-        options:
-            !php/const:PDO::MYSQL_ATTR_SSL_CA: '%kernel.project_dir%/BaltimoreCyberTrustRoot.crt.pem'
-    orm:
-        auto_generate_proxy_classes: true
-        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-        auto_mapping: true
-        mappings:
-            App:
-                is_bundle: false
-                type: annotation
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+  dbal:
+    driver: pdo_mysql
+    host: "hackathon-team-i.mysql.database.azure.com"
+    port: "3306"
+    dbname: "transmusicales_db"
+    user: "dev_hackathon@hackathon-team-i"
+    password: "eoAD9R1ZKyk8gifSNw5ZUniFDt64DgwJ"
+    charset: UTF8
+    # Options for SSL connection
+    # options:
+    #   [
+    #     !php/const:PDO::MYSQL_ATTR_SSL_CA: "%kernel.project_dir%/BaltimoreCyberTrustRoot.crt.pem",
+    #   ]
+  orm:
+    auto_generate_proxy_classes: true
+    naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+    auto_mapping: true
+    mappings:
+      App:
+        is_bundle: false
+        type: annotation
+        dir: "%kernel.project_dir%/src/Entity"
+        prefix: 'App\Entity'
+        alias: App
